@@ -52,6 +52,9 @@ playerChoosenSpells = []
 playerSpellSlots = 0
 druidSpellChooser = False
 gameLoop = 0
+choiceChoosen = ""
+rolledNumber = 0
+playerGender = ""
 
 def rollDiceD6():
   return random.randint(1, 6)
@@ -333,7 +336,7 @@ if playersClass == "Barbarian":
 
 
 if playersClass == "Sorcerer":
-  time.sleep(2)
+  time.sleep(1)
   playersInventory.append("Leather Armor")
   playersInventory.append("Shortsword")
   playersInventory.append("Torches x10")
@@ -350,8 +353,11 @@ if playersClass == "Sorcerer":
   total = sum(startingGoldBeforeMultiplication * 10)
   startingGold = startingGold + total
   playerGold = playerGold + startingGold
+  time.sleep(1)
   print(playerGold, "Gold")
+  time.sleep(0.5)
   print("7 items were added to your inventory.")
+  time.sleep(0.5)
 
   if "Leather Armor" in playersInventory:
     playersCurrentWornArmorName = "Leather Armor"
@@ -608,7 +614,7 @@ if playersClass == "Sorcerer":
           amountOfChoosenLevelZeroSpells = amountOfChoosenLevelZeroSpells + 1
       else: 
         print("Not a valid spell.")
-    message = ("Now lets choose your level 1 spells. Remember, you only have 1 choice, so choose wisely.")
+    message = ("Now lets choose your level 1 spells. Remember, you only have 3 choices, so choose wisely.")
     printMessage()
   
     message = ("True Strike: +20 on your next attack roll.")
@@ -683,7 +689,7 @@ if playersClass == "Druid":
       else: 
         print("Not a valid spell.")
 
-    message = ("Now lets choose your level 1 spells. Remember, you only have 3 choices, so choose wisely.")
+    message = ("Now lets choose your level 1 spells. Remember, you only have 1 choice, so choose wisely.")
     printMessage()
     message = ("")
     printMessage()
@@ -732,9 +738,52 @@ if playersClass == "Druid":
 message = ("Now that you have made your vessel, its time for your journey to begin. A journey of heartbreak, sadness, of...")
 delayPrint(0.1)
 time.sleep(2)
-print("\n", "Mom: " + playerName + "!")
+print("\n" + "Mom: " + playerName + "!")
 message = ("Its time to wake up. Wouldnt want you missing academy!")
-delayPrint(0.02)
+delayPrint(0.04)
 time.sleep(1)
+print("\n")
 message = ("You look around the room you find yourself in. Gentle sunlight streams through the curtained window as you hear kids yelling in the urban street below.")
-delayPrint(0.02)
+delayPrint(0.04)
+print("\n")
+message = ("Your not sure where this vessel has taken you. What would you like to do?")
+delayPrint(0.04)
+print("\n")
+message = ("A: Call back to your 'mom'.")
+delayPrint(0.04)
+print("\n")
+message = ("B: Look around this foreign room (Wisdom, Perception). ")
+delayPrint(0.04)
+print("\n")
+message = ("C: Start walking down stairs.")
+delayPrint(0.04)
+gameLoop = gameLoop + 1
+while gameLoop == 1:
+  choiceChoosen = str(input(""))
+  if choiceChoosen == "A" or choiceChoosen == "a":
+    time.sleep(0.3)
+    message = ("Ill be there in a second mom!")
+    delayPrint(0.04)
+    gameLoop = gameLoop + 1
+    break
+  elif choiceChoosen == "B" or choiceChoosen == "b":
+    time.sleep(0.3)
+    rolledNumber = rollDiceD20() + playerWisdomModifier
+    if rolledNumber >= 8:
+      message = ("You wipe the sleep off your eyes and look around this new space. The room is decorated nicely, with a queen bed tucked in the corner. Theres a desk with a computer on top of it, which says 'Explorers.net' in the url.")
+      delayPrint(0.04)
+      time.sleep(1)
+      print("\n")
+      message = ("You see a small lockbox tucked away neatly on your bed's nightstand. After opening it you see a small necklace inside. You pick it up and wear it.")
+      delayPrint(0.04)
+
+    elif rolledNumber < 8:
+      print("Test, 2")
+    else:
+      print("Error")
+  elif choiceChoosen == "C" or choiceChoosen == "c":
+    message = ("After getting up from bed and wipping your eyes, you start walking down the stairs.")
+    delayPrint(0.04)
+    gameLoop = gameLoop + 2
+  else:
+    print("Not a valid choice. Please pick 'A', 'B' or 'C'.")
