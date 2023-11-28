@@ -89,10 +89,12 @@ def characterInfo():
   print(playersInventory, " - Current Inventory")
   print(playersArmorClass, " - Armor Class")
 
+
+
 def printMessage():
   global message
   print(textwrap.fill(message, width=shutil.get_terminal_size().columns))
-  
+
 def calculate_modifier(score):
     if score in [18, 19]:
         return 4
@@ -130,10 +132,8 @@ def delayPrint(t):
 
 
 
-
-  
-
-print("Welcome adventurer! Before we begin, may I get your name?" )
+message = ("Welcome adventurer! Before we begin, may I get your name?" )
+delayPrint(0.04)
 #Once finished choosing name, switch to False
 while nameChecker is True:
 
@@ -331,7 +331,7 @@ if playersClass == "Barbarian":
       playersArmorClass = 10 + playersCurrentWornArmorDefense +   playerDexterityModifier + playersCurrentWornShieldDefense
   else:
     playersArmorClass = 10 + playersCurrentWornArmorDefense + maximumArmorDexBonus + playersCurrentWornShieldDefense
-    
+
   playerHealth = playerHealthMax - playerDamageTaken
 
 
@@ -505,7 +505,7 @@ def swingGreataxe():
   if rolledAttack >= enemyAC:
       damage = rollDiceD6() + playerStrengthModifier
       return damage
-    
+
 def swingShortsword():
   global playerStrengthModifier
   global playerDexterityModifier
@@ -527,7 +527,7 @@ def swingShortsword():
     if playerStrengthModifier <= playerDexterityModifier:
       damage = rollDiceD6() * 2 + playerDexterityModifier
       return damage
-      
+
   if rolledAttack >= enemyAC:
     if playerStrengthModifier > playerDexterityModifier:
       damage = rollDiceD6() + playerStrengthModifier
@@ -616,7 +616,7 @@ if playersClass == "Sorcerer":
         print("Not a valid spell.")
     message = ("Now lets choose your level 1 spells. Remember, you only have 3 choices, so choose wisely.")
     printMessage()
-  
+
     message = ("True Strike: +20 on your next attack roll.")
     printMessage()
     message = ("Magic Weapon: Weapon gets +1 bonus")
@@ -759,7 +759,7 @@ message = ("C: Start walking down stairs.")
 delayPrint(0.04)
 gameLoop = gameLoop + 1
 while gameLoop == 1:
-  choiceChoosen = str(input(""))
+  choiceChoosen = str(input("\n"))
   if choiceChoosen == "A" or choiceChoosen == "a":
     time.sleep(0.3)
     message = ("Ill be there in a second mom!")
@@ -768,22 +768,91 @@ while gameLoop == 1:
     break
   elif choiceChoosen == "B" or choiceChoosen == "b":
     time.sleep(0.3)
+    if playerWisdomModifier is None:
+      playerWisdomModifier = 0
     rolledNumber = rollDiceD20() + playerWisdomModifier
     if rolledNumber >= 8:
       message = ("You wipe the sleep off your eyes and look around this new space. The room is decorated nicely, with a queen bed tucked in the corner. Theres a desk with a computer on top of it, which says 'Explorers.net' in the url.")
       delayPrint(0.04)
       time.sleep(1)
       print("\n")
-      message = ("You see a small lockbox tucked away neatly on your bed's nightstand. After opening it you see a small necklace inside. You pick it up and wear it.")
+      message = ("You see a small lockbox tucked away neatly on your bed's nightstand. After opening it you see an ornamented pendant inside, with a ruby as its centerpiece. You pick up the necklace and wear it around your neck. ")
       delayPrint(0.04)
+      time.sleep(1)
+      playersInventory.append("Regenerative Pendant")
+      gameLoop = gameLoop + 2
 
     elif rolledNumber < 8:
-      print("Test, 2")
+      message = ("You wipe the sleep off your eyes and look around this new space. The room is decorated nicely, with a queen bed tucked in the corner. Theres a desk with a computer on top of it, which says 'Explorers.net' in the url.")
+      delayPrint(0.04)
+      time.sleep(1)
+      print("\n")
+      gameLoop = gameLoop + 2
     else:
-      print("Error")
+      print("Error, Line 788")
   elif choiceChoosen == "C" or choiceChoosen == "c":
-    message = ("After getting up from bed and wipping your eyes, you start walking down the stairs.")
+    message = ("After getting up from bed and wiping your eyes, you open the wooden dresser next to your bed and put on a new set of clothes, starting to walk down the stairs.")
     delayPrint(0.04)
     gameLoop = gameLoop + 2
   else:
     print("Not a valid choice. Please pick 'A', 'B' or 'C'.")
+
+
+
+while gameLoop == 2:
+  print("\n")
+  message = ("Now what would you like to do?")
+  delayPrint(0.04)
+  
+  
+  message = ("A: Look around this foreign room (Wisdom, Perception). ")
+  delayPrint(0.04)
+  print("\n")
+  message = ("B: Start walking down stairs.")
+  delayPrint(0.04)
+  while gameLoop == 2:
+    choiceChoosen = str(input("\n"))
+    if choiceChoosen == "A" or choiceChoosen == "a":
+      time.sleep(0.3)
+      if playerWisdomModifier is None:
+        playerWisdomModifier = 0
+      rolledNumber = rollDiceD20() + playerWisdomModifier
+      if rolledNumber >= 8:
+        message = ("You wipe the sleep off your eyes and look around this new space. The room is decorated nicely, with a queen bed tucked in the corner. Theres a desk with a computer on top of it, which says 'Explorers.net' in the url.")
+        delayPrint(0.04)
+        time.sleep(1)
+        print("\n")
+        message = ("You see a small lockbox tucked away neatly on your bed's nightstand. After opening it you see an ornamented pendant inside, with a ruby as its centerpiece. You pick up the pendant and wear it around your neck. ")
+        delayPrint(0.04)
+        playersInventory.append("Regenerative Pendant")
+        gameLoop = gameLoop + 1
+
+      elif rolledNumber < 8:
+        message = ("You wipe the sleep off your eyes and look around this new space. The room is decorated nicely, with a queen bed tucked in the corner. Theres a desk with a computer on top of it, which says 'Explorers.net' in the url.")
+        delayPrint(0.04)
+        time.sleep(1)
+        print("\n")
+      else:
+        print("Error, Line 836")
+    elif choiceChoosen == "B" or choiceChoosen == "b":
+      message = ("After getting up from bed and wiping your eyes, you start walking down the stairs.")
+      delayPrint(0.04)
+      gameLoop = gameLoop + 1
+    else:
+      print("Not a valid choice. Please pick 'A' or 'B'.")
+
+
+while gameLoop == 3:
+  print("\n")
+  message = ("You decide to start walking down the stairs, the fluorescent lights giving off a soft buzz above your head.")
+  delayPrint(0.04)
+  if "Regenerative Pendant" in playersInventory:
+    message = ("'Good mor-' your mom glances over at you before returning to her cooking. 'I see your wearing your father's pendant. Its been a while since you pulled it out.' She says nothing more and continues  'See you at six.'")
+    delayPrint(0.04)
+    break
+  else: 
+    message = ("Good morning " + playerName + "." + " You better get going quickly— you might be late at this rate.")
+    delayPrint(0.04)
+    
+
+
